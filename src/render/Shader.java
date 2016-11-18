@@ -15,24 +15,8 @@ public class Shader {
 	private int vs;
 	private int fs;
 	
-	public Shader(String filename) {
+	public Shader() {
 		program = glCreateProgram();
-		
-		vs = glCreateShader(GL_VERTEX_SHADER);
-		glShaderSource(vs, readFile(filename+".vs"));
-		glCompileShader(vs);
-		if(glGetShaderi(vs,GL_COMPILE_STATUS) != 1){
-			System.err.println(glGetShaderInfoLog(vs));
-			System.exit(1);
-		}
-		
-		fs = glCreateShader(GL_FRAGMENT_SHADER);
-		glShaderSource(fs, readFile(filename+".fs"));
-		glCompileShader(fs);
-		if(glGetShaderi(fs,GL_COMPILE_STATUS) != 1){
-			System.err.println(glGetShaderInfoLog(fs));
-			System.exit(1);
-		}
 		
 		glAttachShader(program, vs);
 		glAttachShader(program, fs);
@@ -48,6 +32,27 @@ public class Shader {
 		glValidateProgram(program);
 		if(glGetProgrami(program, GL_VALIDATE_STATUS) != 1){
 			System.err.println(glGetProgramInfoLog(program));
+			System.exit(1);
+		}
+	}
+	
+	public void createFragmentShader(String fileName){
+
+		fs = glCreateShader(GL_FRAGMENT_SHADER);
+		glShaderSource(fs, readFile(fileName+".fs"));
+		glCompileShader(fs);
+		if(glGetShaderi(fs,GL_COMPILE_STATUS) != 1){
+			System.err.println(glGetShaderInfoLog(fs));
+			System.exit(1);
+		}
+	}
+
+	public void createVertexShader(String fileName){
+		vs = glCreateShader(GL_VERTEX_SHADER);
+		glShaderSource(vs, readFile(fileName+".vs"));
+		glCompileShader(vs);
+		if(glGetShaderi(vs,GL_COMPILE_STATUS) != 1){
+			System.err.println(glGetShaderInfoLog(vs));
 			System.exit(1);
 		}
 	}
@@ -84,7 +89,7 @@ public class Shader {
 		StringBuilder string = new StringBuilder();
 		BufferedReader br;
 		try{
-			br = new BufferedReader(new FileReader(new File("./shaders/" + filename)));
+			br = new BufferedReader(new FileReader(new File("./res/shaders/" + filename)));
 			String line;
 			while((line = br.readLine()) != null) {
 				string.append(line);

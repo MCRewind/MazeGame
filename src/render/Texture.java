@@ -22,7 +22,7 @@ public class Texture {
 		// TODO Auto-generated constructor stub
 		BufferedImage bi;
 		try{
-			bi = ImageIO.read(new File("./textures/"+filename));
+			bi = ImageIO.read(new File("./res/textures/"+filename));
 			width = bi.getWidth();
 			height = bi.getHeight();
 			

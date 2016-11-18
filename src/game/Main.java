@@ -25,7 +25,6 @@ public class Main {
 
 	public Main() {
 		Window.setCallbacks();
-		
 
 		if(glfwInit() != true) {
 			System.err.println("GLFW Failed to initialize");
@@ -66,7 +65,9 @@ public class Main {
 //		};
 //		
 //		Model model = new Model(vertices, texture,indices);
-		Shader shader = new Shader("shader");
+		Shader shader = new Shader();
+		shader.createFragmentShader("fragment");
+		shader.createVertexShader("vertex");
 		//Texture tex = new Texture("./res/test.png");
 
 		//Matrix4f projection = new Matrix4f()
@@ -81,9 +82,6 @@ public class Main {
 				world.setTile(Tile.test2, i, j);
 			}
 		}
-
-		
-		
 		
 		//camera.setPosition(new Vector3f(-200,0,0));
 		
@@ -102,7 +100,6 @@ public class Main {
 			unprocessed+=passed;
 			frame_time += passed;
 			
-			
 			time = time_2;
 			
 			while(unprocessed >= frame_cap){
@@ -113,12 +110,9 @@ public class Main {
 					System.out.println("TRUE");
 				}
 				
-
-				
 				player.update((float)frame_cap, window, camera, world);
 				
 				world.correctCamera(camera, window);
-
 				
 				window.update();
 				if(frame_time >= 1.0){
@@ -146,10 +140,6 @@ public class Main {
 				window.swapBuffers();
 				frames++;
 			}
-
-
-			
-
 		}
 		
 		glfwTerminate();
@@ -159,5 +149,4 @@ public class Main {
 		
 		new Main();
 	}
-
 }
