@@ -19,10 +19,9 @@ public class Texture {
 	private int height;
 	
 	public Texture(String filename) {
-		// TODO Auto-generated constructor stub
 		BufferedImage bi;
 		try{
-			bi = ImageIO.read(new File("./res/textures/"+filename));
+			bi = ImageIO.read(new File("/res/textures/"+filename));
 			width = bi.getWidth();
 			height = bi.getHeight();
 			

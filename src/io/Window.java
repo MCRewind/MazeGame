@@ -19,7 +19,6 @@ public class Window {
 			public void invoke(int error, long description) {
 				throw new IllegalStateException(GLFWErrorCallback.getDescription(description));
 			}
-			
 		});
 	}
 	
@@ -40,14 +39,11 @@ public class Window {
 				(vid.width()-width)/2,
 				(vid.height()-height)/2);
 		
-		
 		glfwShowWindow(window);
 		}
 		glfwMakeContextCurrent(window);
 		
 		input = new Input(window);
-		
-		
 	}
 	
 	public boolean shouldClose(){
@@ -71,10 +67,23 @@ public class Window {
 		glfwPollEvents();
 	}
 	
-	public int getWidth(){return width;}
-	public int getHeight(){return height;}
-	public boolean getFullscreen(){return fullscreen;}
-	public long getWindow() {return window;}
-	public Input getInput(){return input;}
-
+	public int getWidth(){
+		return width;
+	}
+	
+	public int getHeight(){
+		return height;
+	}
+	
+	public boolean getFullscreen(){
+		return fullscreen;
+	}
+	
+	public long getWindow() {
+		return window;
+	}
+	
+	public Input getInput(){
+		return input;
+	}
 }

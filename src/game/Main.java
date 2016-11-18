@@ -2,20 +2,13 @@ package game;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
-import org.joml.Matrix4f;
-import org.joml.Vector2f;
-import org.joml.Vector3f;
-import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 
-import collision.AABB;
 import entity.Player;
 import io.Timer;
 import io.Window;
 import render.Camera;
-import render.Model;
 import render.Shader;
-import render.Texture;
 import world.Tile;
 import world.TileRenderer;
 import world.World;
@@ -45,33 +38,9 @@ public class Main {
 		
 		TileRenderer tiles = new TileRenderer();
 		
-//		float[] vertices = new float[]{
-//				-0.5f,0.5f,0, 	//TOP LEFT
-//				0.5F,0.5f,0,	//TOP RIGHT
-//				0.5f,-0.5f,0,	//BOTTOM RIGHT
-//				-0.5F,-0.5f,0,	//BOTTOM LEFT
-//		};
-//		
-//		float[] texture = new float[] {
-//				0,0,
-//				1,0,
-//				1,1,
-//				0,1,
-//		};
-//		
-//		int[] indices = new int[]{
-//				0,1,2,
-//				2,3,0
-//		};
-//		
-//		Model model = new Model(vertices, texture,indices);
 		Shader shader = new Shader();
 		shader.createFragmentShader("fragment");
 		shader.createVertexShader("vertex");
-		//Texture tex = new Texture("./res/test.png");
-
-		//Matrix4f projection = new Matrix4f()
-				//.ortho2D(-640/2,640/2, -480/2, 480/2);
 		World world = new World();
 		
 		Player player = new Player();
@@ -82,8 +51,6 @@ public class Main {
 				world.setTile(Tile.test2, i, j);
 			}
 		}
-		
-		//camera.setPosition(new Vector3f(-200,0,0));
 		
 		double frame_cap = 1.0/60.0;
 		
