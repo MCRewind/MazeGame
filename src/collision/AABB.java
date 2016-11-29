@@ -21,6 +21,26 @@ public class AABB {
 		return new Collision(distance,(distance.x < 0 && distance.y < 0));
 	}
 	
+	public Collision getPredictiveCollision(AABB box2, float vel){
+		
+		Vector2f distance = box2.center.sub(center, new Vector2f());
+		float collisionTime = distance.length()/vel;
+		if (collisionTime > 1){
+			return new Collision(distance, false);
+		}
+		else
+		{
+			
+		}
+		
+		distance.x = (float)Math.abs(distance.x);
+		distance.y = (float)Math.abs(distance.y);
+		
+		distance.sub(half_extent.add(box2.half_extent, new Vector2f()));
+		
+		return new Collision(distance,(distance.x < 0 && distance.y < 0));
+	}
+	
 	public void correctPosition(AABB box2, Collision data){
 		Vector2f correction = box2.center.sub(center, new Vector2f());
 		if(data.distance.x > data.distance.y){
