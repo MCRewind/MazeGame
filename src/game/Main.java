@@ -41,6 +41,7 @@ public class Main {
 		Shader shader = new Shader();
 		shader.createFragmentShader("fragment");
 		shader.createVertexShader("vertex");
+		shader.attach();
 		World world = new World();
 		
 		Player player = new Player();

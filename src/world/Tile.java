@@ -11,13 +11,13 @@ public class Tile {
 	private boolean solid;
 	private  String texture;
 	
-	public Tile(String texture){
+	public Tile(String texture) {
 		this.id = not;
 		not++;
 		this.texture = texture;
 		this.solid = false;
-		if(tiles[id] != null){
-			throw new IllegalStateException("Tiles at ["+id+"] is already being used!");
+		if(tiles[id] != null) {
+			throw new IllegalStateException("Tile at ["+id+"] is already being used!");
 		}
 		tiles[id] = this;
 	}

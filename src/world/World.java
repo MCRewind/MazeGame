@@ -50,6 +50,7 @@ public class World {
 			}
 		}
 	}
+
 	public void correctCamera(Camera camera, Window window){
 		Vector3f pos = camera.getPosition();
 		

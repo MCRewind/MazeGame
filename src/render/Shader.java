@@ -15,7 +15,9 @@ public class Shader {
 	private int vs;
 	private int fs;
 	
-	public Shader() {
+	public Shader() {}
+	
+	public void attach() {
 		program = glCreateProgram();
 		
 		glAttachShader(program, vs);
@@ -89,7 +91,7 @@ public class Shader {
 		StringBuilder string = new StringBuilder();
 		BufferedReader br;
 		try{
-			br = new BufferedReader(new FileReader(new File("/res/shaders/" + filename)));
+			br = new BufferedReader(new FileReader(new File("res/shaders/" + filename)));
 			String line;
 			while((line = br.readLine()) != null) {
 				string.append(line);
