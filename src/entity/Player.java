@@ -54,21 +54,22 @@ public class Player {
 		
 		Vector2f velocity = new Vector2f();
 		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_A)){
-			//transform.pos.add(new Vector3f(-speed*delta,0,0));
+			transform.pos.add(new Vector3f(-speed*delta,0,0));
 			velocity.add(-speed*delta, 0);
 		}
 		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_W)){
-			//transform.pos.add(new Vector3f(0,speed*delta,0));
+			transform.pos.add(new Vector3f(0,speed*delta,0));
 			velocity.add(0, speed*delta);
 		}
 		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_D)){
-			//transform.pos.add(new Vector3f(speed*delta,0,0));
+			transform.pos.add(new Vector3f(speed*delta,0,0));
 			velocity.add(speed*delta, 0);
 		}
 		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_S)){
-			//transform.pos.add(new Vector3f(0,-speed*delta,0));
+			transform.pos.add(new Vector3f(0,-speed*delta,0));
 			velocity.add(0, -speed*delta);
 		}
+		transform.pos.mul(new Vector3f(velocity.x,velocity.y,0));
 		
 		bounding_box.getCenter().set(transform.pos.x,transform.pos.y);
 		
@@ -96,11 +97,11 @@ public class Player {
 			}
 		}
 		if(box != null){
-			Collision data = bounding_box.getPredictiveCollision(box,velocity);
-			if(data.isIntersecting){
-				bounding_box.correctPosition(box, data);
-				transform.pos.set(bounding_box.getCenter(),0);
-			}
+			Collision data = bounding_box.getPredictiveCollisionWithStatic(box,velocity,true);
+			//if(data.isIntersecting){
+				//bounding_box.correctPosition(box, data);
+				//transform.pos.set(bounding_box.getCenter(),0);
+			//}
 		}
 		
 		camera.setPosition(transform.pos.mul(-world.getScale(), new Vector3f()));
