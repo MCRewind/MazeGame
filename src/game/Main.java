@@ -46,13 +46,15 @@ public class Main {
 		
 		Player player = new Player();
 		
+		world.setTile(Tile.test2, 4, 4);
+		/*
 		for(int i=6; i < 12; i++){
 			for(int j=6; j < 12; j++){
 				
 				world.setTile(Tile.test2, i, j);
 			}
 		}
-		
+		*/
 		double frame_cap = 1.0/60.0;
 		
 		double frame_time = 0;
