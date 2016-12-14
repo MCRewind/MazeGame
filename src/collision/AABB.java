@@ -24,29 +24,33 @@ public class AABB {
 	public Collision getPredictiveCollisionWithStatic(AABB box2, Vector2f vel, boolean correct, float delta){
 		
 		float speed = vel.length();
-		
+		boolean approaching = false;
 		Vector2f distance = box2.center.sub(center, new Vector2f());
 		System.out.flush();
 		//vel.mul(1/delta);ds
+		//if(distance.sub(vel).
+		
 		distance.x = (float)Math.abs(distance.x);
 		distance.y = (float)Math.abs(distance.y);
 		distance.sub(half_extent.add(box2.half_extent, new Vector2f()));
 		System.out.println(String.format("Distance %.8g%n%.8g%n", distance.x, distance.y));
-		System.out.println(String.format("Velocisty %.8g%n%.8g%n", vel.x, vel.y));
+		System.out.println(String.format("Velocity %.8g%n%.8g%n", vel.x, vel.y));
 		float colTimeX = distance.x/(vel.x);
 		float colTimeY = distance.y/(vel.y);
 		
 		colTimeX *= delta;
-		colTimeY *= delta;
-		if ((float)Math.abs(colTimeX) > 100) colTimeX = 0;
-		if ((float)Math.abs(colTimeY) > 100) colTimeY = 0;
+		colTimeY *= -delta; //delta = 1/fps
+		if ((float)Math.abs(colTimeX) > 500) colTimeX = 0;
+		if ((float)Math.abs(colTimeY) > 500) colTimeY = 0;
 		float positiveTimeX = (float)Math.abs(colTimeX);
 		float positiveTimeY = (float)Math.abs(colTimeY);
 		System.out.println(String.format("Time %.8g%n%.8g%n", colTimeX, colTimeY));
-		if((colTimeX < 1 && colTimeY < 1)&&(colTimeX > -1 && colTimeY > -1)){
+		//if((colTimeX < delta && colTimeY < delta)&&(colTimeX > -delta && colTimeY > -delta)){
+		if((colTimeX < delta || colTimeX > -delta)&&(colTimeY < delta || colTimeY > -delta)){
 			float colTime = Math.min(colTimeX,colTimeY);
 			if (correct){
-				center.add(vel.x * (positiveTimeX/delta),(vel.y * (positiveTimeY/delta)));
+				center.add(vel.x * (positiveTimeX),(vel.y * (positiveTimeY)));
+				System.out.println("Correcting");
 			}
 		
 			return new Collision(distance.mul(colTime), true);

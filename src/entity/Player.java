@@ -51,7 +51,7 @@ public class Player {
 	}
 
 	public void update(float delta, Window window, Camera camera, World world){
-		int speed = 6;
+		int speed = 1;
 		
 		Vector2f velocity = new Vector2f();
 		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_A)){

@@ -50,7 +50,7 @@ public class Main {
 		/*
 		for(int i=6; i < 12; i++){
 			for(int j=6; j < 12; j++){
-				
+				ds
 				world.setTile(Tile.test2, i, j);
 			}
 		}
