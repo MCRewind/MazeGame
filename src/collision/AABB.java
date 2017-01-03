@@ -25,6 +25,7 @@ public class AABB {
 		
 		float speed = vel.length();
 		boolean approaching = false;
+		boolean flag = false;
 		Vector2f distance = box2.center.sub(center, new Vector2f());
 		Vector2f distance2 = box2.center.sub(center, new Vector2f());
 
@@ -56,84 +57,140 @@ public class AABB {
 			colTimeX = distance.x/(vel.x);
 			colTimeX *= delta;
 			System.out.println(String.format("TimeX %.8g%n", colTimeX));
+			System.out.println(String.format("DistanceY %.8g%n", distance.y));
 			if((float)Math.abs(colTimeX) < delta)
 			{
-				center.add(vel.x * ((float)Math.abs(colTimeX)),0);
-				return new Collision(distance.mul(colTimeX), true);
+				if (distance.y < 0){
+					flag = true;
+					System.out.println("X collide!");
+					center.add(vel.x * ((float)Math.abs(colTimeX)),0);
+					//return new Collision(distance.mul(colTimeX), true);
+				}
+				else
+				{
+					//flag = true;
+					//center.add(vel.x,0);
+					//return new Collision(distance.mul(colTimeX), false);
+				}
+			}
+			else{
+				center.add(vel.x,0);
 			}
 				
 		}
 		else if(distance2.x*vel.x < 0){
-			System.out.println("getting father away on x direction");
+			//System.out.println("getting father away on x direction");
+			center.add(vel.x,0);
 		}
 		else{
-			System.out.println("We aren't moving on the x direction");
+			center.add(vel.x,0);
+			//System.out.println("We aren't moving on the x direction");
 		}
 		
 		if(distance2.y*vel.y > 0){
+//			System.out.println("getting closer on y direction");
+//			colTimeY = distance.y/(vel.y);
+//			colTimeY *= delta;
+//			System.out.println(String.format("TimeY %.8g%n",  colTimeY));
+//			if(colTimeY < delta)
+//				center.add(vel.y * (colTimeY),0);
+//			
 			System.out.println("getting closer on y direction");
 			colTimeY = distance.y/(vel.y);
 			colTimeY *= delta;
-			System.out.println(String.format("TimeY %.8g%n",  colTimeY));
-			if(colTimeY < delta)
-				center.add(vel.y * (colTimeY),0);
+			System.out.println(String.format("TimeY %.8g%n", colTimeY));
+			System.out.println(String.format("DistanceX %.8g%n", distance.x));
+			if((float)Math.abs(colTimeY) < delta)
+			{
+				if (distance.x < 0){
+					System.out.println("Y collide!");
+					center.add(0,vel.y * ((float)Math.abs(colTimeY)));
+					//if((float)Math.abs(distance2.y) > 0.001){
+						
+					
+					//center.add(0,distance2.y);
+					//}
+					flag = true;
+					//return new Collision(distance.mul(colTimeY), true);
+				}
+				else
+				{
+					//flag = true;
+					
+					//return new Collision(distance.mul(colTimeY), false);
+				}
+			}
+			else
+			{
+				center.add(0,vel.y);
+			}
 				
 		}
 		else if(distance2.y*vel.y < 0){
-			System.out.println("getting father away on y direction");
+			center.add(0,vel.y);
+			//System.out.println("getting father away on y direction");
 		}
 		else{
-			System.out.println("We aren't moving on the y direction");
-		}
-		
-		//center.add(vel.x * (colTimeX),(vel.y * (colTimeY)));
-		
-		System.out.println(String.format("Distance %.8g%n%.8g%n", distance.x, distance.y));
-		System.out.println(String.format("Velocity %.8g%n%.8g%n", vel.x, vel.y));
-		//System.out.println(String.format("Time %.8g%n%.8g%n", colTimeX, colTimeY));
-		System.out.println(delta);
-		if ((float)Math.abs(colTimeX) > 500) colTimeX = 0;
-		if ((float)Math.abs(colTimeY) > 500) colTimeY = 0;
-		float positiveTimeX = (float)Math.abs(colTimeX);
-		float positiveTimeY = (float)Math.abs(colTimeY);
-		if(positiveTimeX < positiveTimeY){
-			System.out.println("We will collide left or right side");
-		}
-		else if(positiveTimeX > positiveTimeY){
-			System.out.println("We will collide top or bottom side");
-		}
-		else{
-			System.out.println("We will collide on the corner or are not moving");
+			center.add(0,vel.y);
+			//System.out.println("We aren't moving on the y direction");
 		}
 		
 		
-		//if((colTimeX < delta && colTimeY < delta)&&(colTimeX > -delta && colTimeY > -delta)){
-		if((colTimeX < delta || colTimeX > -delta)&&(colTimeY < delta || colTimeY > -delta)){
-			float colTime = Math.min(colTimeX,colTimeY);
-			if (correct){
-				//center.add(vel.x * (positiveTimeX),(vel.y * (positiveTimeY)));
-				System.out.println("Correcting");
-			}
-		
-			return new Collision(distance.mul(colTime), false);
+		if (flag == true){
+			return new Collision(distance.mul(colTimeY), true);
 		}
-		
-		//if ((positiveTimeX < 1 && positiveTimeY < 1)&&(positiveTimeX > 0 && positiveTimeY > 0)){
-			
-
-			
-			
-		//}
 		else
 		{
-			return new Collision(distance,false);
-			
-			//distance = distance.
-			//return new Collision(distance, false);
+			return new Collision(distance.mul(colTimeY), false);
 		}
+		//center.add(vel.x * (colTimeX),(vel.y * (colTimeY)));
 		
-
-		
+//		System.out.println(String.format("Distance %.8g%n%.8g%n", distance.x, distance.y));
+//		System.out.println(String.format("Velocity %.8g%n%.8g%n", vel.x, vel.y));
+//		//System.out.println(String.format("Time %.8g%n%.8g%n", colTimeX, colTimeY));
+//		System.out.println(delta);
+//		if ((float)Math.abs(colTimeX) > 500) colTimeX = 0;
+//		if ((float)Math.abs(colTimeY) > 500) colTimeY = 0;
+//		float positiveTimeX = (float)Math.abs(colTimeX);
+//		float positiveTimeY = (float)Math.abs(colTimeY);
+//		if(positiveTimeX < positiveTimeY){
+//			System.out.println("We will collide left or right side");
+//		}
+//		else if(positiveTimeX > positiveTimeY){
+//			System.out.println("We will collide top or bottom side");
+//		}
+//		else{
+//			System.out.println("We will collide on the corner or are not moving");
+//		}
+//		
+//		
+//		//if((colTimeX < delta && colTimeY < delta)&&(colTimeX > -delta && colTimeY > -delta)){
+//		if((colTimeX < delta || colTimeX > -delta)&&(colTimeY < delta || colTimeY > -delta)){
+//			float colTime = Math.min(colTimeX,colTimeY);
+//			if (correct){
+//				//center.add(vel.x * (positiveTimeX),(vel.y * (positiveTimeY)));
+//				System.out.println("Correcting");
+//			}
+//		
+//			return new Collision(distance.mul(colTime), false);
+//		}
+//		
+//		//if ((positiveTimeX < 1 && positiveTimeY < 1)&&(positiveTimeX > 0 && positiveTimeY > 0)){
+//			
+//
+//			
+//			
+//		//}
+//		else
+//		{
+//			return new Collision(distance,false);
+//			
+//			//distance = distance.
+//			//return new Collision(distance, false);
+//		}
+//		
+//
+//		
 		//return new Collision(distance,(distance.x < 0 && distance.y < 0));
 	}
 	

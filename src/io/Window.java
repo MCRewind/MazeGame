@@ -40,9 +40,11 @@ public class Window {
 				(vid.height()-height)/2);
 		
 		glfwShowWindow(window);
-		}
-		glfwMakeContextCurrent(window);
 		
+		}
+		
+		glfwMakeContextCurrent(window);
+		glfwSwapInterval(1);
 		input = new Input(window);
 	}
 	
