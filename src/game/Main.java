@@ -2,6 +2,8 @@ package game;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
+import java.nio.DoubleBuffer;
+
 import org.lwjgl.opengl.GL;
 
 import entity.Player;
@@ -46,11 +48,28 @@ public class Main {
 		
 		Player player = new Player();
 		
+		
 		//world.setTile(Tile.test2, 4, 4);
 		//world.setTile(Tile.test2, 4, 5);
 		//world.setTile(Tile.test2, 4, 6);
 		//world.setTile(Tile.test2, 4, 7);
 		///*
+		for(int a = 0; a < 30;a++){
+			world.setTile(Tile.test2, a, 0);
+		}
+		
+		for(int a = 0; a < 30;a++){
+			world.setTile(Tile.test2, 0, a);
+		}
+		
+		for(int a = 0; a < 30;a++){
+			world.setTile(Tile.test2, 30, a);
+		}
+		
+		for(int a = 0; a < 30;a++){
+			world.setTile(Tile.test2, a, 30);
+		}
+		
 		for(int i=6; i < 12; i++){
 			for(int j=6; j < 12; j++){
 				//ds
@@ -80,6 +99,15 @@ public class Main {
 				unprocessed -= frame_cap;
 				if(window.getInput().isKeyReleased(GLFW_KEY_ESCAPE)){
 					//glfwSetWindowShouldClose(win.getWindow(), true);
+					System.out.println("TRUE");
+				}
+				if(window.getInput().isMouseButtonDown(2)){ //2 should be changed to the right number
+					//glfwSetWindowShouldClose(win.getWindow(), true);
+					//double x;
+					//double y;
+					 DoubleBuffer xPos = null, yPos = null;
+					 glfwGetCursorPos(window.getWindow(),xPos, yPos);
+					//double x,y = glfwGetCursorPos(window);
 					System.out.println("TRUE");
 				}
 				

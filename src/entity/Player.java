@@ -42,17 +42,22 @@ public class Player {
 		};
 		
 		model = new Model(vertices, texture,indices);
+		//model.
 		//this.texture = new Texture("player.png");
 		this.texture = new Animation(8,5,"wait");
 		transform = new Transform();
 		transform.scale = new Vector3f(32,32,1);
+		transform.pos.x = 13;
+		transform.pos.y = -13;
 		
+		System.out.println("intersecting1");
 		bounding_box = new AABB(new Vector2f(transform.pos.x,transform.pos.y), new Vector2f(1,1));
+
 	}
 
 	public void update(float delta, Window window, Camera camera, World world){
 		int speed = 10;
-		
+		System.out.println(String.format("Pos %.8g%n", transform.pos.x));
 		Vector2f velocity = new Vector2f();
 		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_A)){
 			transform.pos.add(new Vector3f(-speed*delta,0,0));
@@ -86,6 +91,7 @@ public class Player {
 		}
 		
 		AABB box = null;
+		
 		for(int i = 0; i < boxes.length; i++){
 			if(boxes[i] != null){
 				if(box == null) box = boxes[i];
@@ -105,17 +111,60 @@ public class Player {
 				System.out.println("Not intersecting");
 				//bounding_box.correctPosition(box, data);
 				//transform.pos.add(velocity.x,velocity.y,0);
+				
+				
 			}
 			else{
 				bounding_box.correctPosition(box, data);
 				System.out.println("intersecting");
 				transform.pos.set(bounding_box.getCenter(),0);
+				
+				
+				//box = null;
+				
+				for(int i = 0; i < boxes.length; i++){
+					if(boxes[i] != null){
+						if(box == null) box = boxes[i];
+						
+						Vector2f length1 = box.getCenter().sub(transform.pos.x,transform.pos.y, new Vector2f());
+						Vector2f length2 = boxes[i].getCenter().sub(transform.pos.x,transform.pos.y, new Vector2f());
+						
+						if(length1.lengthSquared() > length2.lengthSquared()){
+							box = boxes[i];
+						}
+					}
+				}
+				if(box != null){
+					//Collision data = bounding_box.getPredictiveCollisionWithStatic(box,velocity,true,delta);
+					data = bounding_box.getCollision(box);
+					if(!data.isIntersecting){
+						System.out.println("Not intersecting");
+						//bounding_box.correctPosition(box, data);
+						//transform.pos.add(velocity.x,velocity.y,0);
+						
+						
+					}
+					else{
+						bounding_box.correctPosition(box, data);
+						System.out.println("intersecting");
+						transform.pos.set(bounding_box.getCenter(),0);
+						
+						
+					}
+					
+					
+				}
 			}
+			
 			
 		}
 		else{
 			//transform.pos.add(velocity.x,velocity.y,0);
 		}
+		
+		
+		
+		
 		
 		camera.setPosition(transform.pos.mul(-world.getScale(), new Vector3f()));
 	}
