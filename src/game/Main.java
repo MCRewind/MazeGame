@@ -4,6 +4,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.nio.DoubleBuffer;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL;
 
 import entity.Player;
@@ -101,14 +102,18 @@ public class Main {
 					//glfwSetWindowShouldClose(win.getWindow(), true);
 					System.out.println("TRUE");
 				}
-				if(window.getInput().isMouseButtonDown(2)){ //2 should be changed to the right number
+				if(window.getInput().isMouseButtonDown(GLFW_MOUSE_BUTTON_1)){ //2 should be changed to the right number
 					//glfwSetWindowShouldClose(win.getWindow(), true);
 					//double x;
 					//double y;
-					 DoubleBuffer xPos = null, yPos = null;
-					 glfwGetCursorPos(window.getWindow(),xPos, yPos);
-					//double x,y = glfwGetCursorPos(window);
-					System.out.println("TRUE");
+					DoubleBuffer b1 = BufferUtils.createDoubleBuffer(1);
+					DoubleBuffer b2 = BufferUtils.createDoubleBuffer(1);
+					glfwGetCursorPos(window.getWindow(), b1, b2);
+					//Tile thisTile = world.getTile((int)b1.get(0), (int)b2.get(0));
+					
+					world.setGlobalTile(Tile.test2, (int)b1.get(0), (int)b2.get(0),window);
+					
+					System.out.println("x : " + b1.get(0) + ", y = " + b2.get(0));
 				}
 				
 				player.update((float)frame_cap, window, camera, world);

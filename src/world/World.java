@@ -88,6 +88,21 @@ public class World {
 			bounding_boxes[x + y * width] = null;
 		}
 	}
+	
+	public void setGlobalTile(Tile tile, int x, int y, Window window){
+		//x = (x+(window.getWidth()/2)) / (scale*2);
+		//y = (y-(window.getHeight()/2)) / (scale*2);
+		x = (x)/(scale*2);
+		y = (y+(height/2))/(scale*2);
+		tiles[x+y*width] = tile.getId();
+		if(tile.isSolid()){
+			bounding_boxes[x + y * width] = new AABB(new Vector2f(x*2, -y*2), new Vector2f(1,1));
+		}
+		else
+		{
+			bounding_boxes[x + y * width] = null;
+		}
+	}
 
 	public Tile getTile(int x, int y){
 		try{

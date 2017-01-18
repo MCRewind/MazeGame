@@ -1,6 +1,7 @@
 package io;
 import static org.lwjgl.glfw.GLFW.*;
 
+import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 	 
@@ -20,6 +21,8 @@ public class Window {
 				throw new IllegalStateException(GLFWErrorCallback.getDescription(description));
 			}
 		});
+		
+		
 	}
 	
 	public Window() {

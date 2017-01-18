@@ -22,12 +22,13 @@ public class Input {
 		return (isKeyDown(key) && !keys[key]);
 	}
 	
+	
 	public boolean isKeyReleased(int key){
 		return (!isKeyDown(key) && keys[key]);
 	}
 	
 	public boolean isMouseButtonDown(int button){
-		return glfwGetKey(window, button) == 1;
+		return glfwGetMouseButton(window, button) == 1;
 	}
 	
 
