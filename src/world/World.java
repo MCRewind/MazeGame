@@ -75,6 +75,9 @@ public class World {
 		if(pos.y > h-(window.getHeight()/2)-scale){
 			pos.y = h-(window.getHeight()/2)-scale;
 		}
+		
+		System.out.println(String.format("PosX %.8g%n", ((float)camera.getPosition().x+(window.getWidth()/2)) / (scale*2)));
+		System.out.println(String.format("PosY %.8g%n", ((float)camera.getPosition().y-(window.getHeight()/2)) / (scale*2)));
 	}
 	
 	
@@ -89,8 +92,9 @@ public class World {
 		}
 	}
 	
-	public void setGlobalTile(Tile tile, int x, int y, Window window){
+	public void setGlobalTile(Tile tile, int x, int y, Window window, Camera camera){
 		//x = (x+(window.getWidth()/2)) / (scale*2);
+		
 		//y = (y-(window.getHeight()/2)) / (scale*2);
 		x = (x)/(scale*2);
 		y = (y+(height/2))/(scale*2);

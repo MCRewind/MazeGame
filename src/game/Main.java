@@ -111,7 +111,7 @@ public class Main {
 					glfwGetCursorPos(window.getWindow(), b1, b2);
 					//Tile thisTile = world.getTile((int)b1.get(0), (int)b2.get(0));
 					
-					world.setGlobalTile(Tile.test2, (int)b1.get(0), (int)b2.get(0),window);
+					world.setGlobalTile(Tile.test2, (int)b1.get(0), (int)b2.get(0),window, camera);
 					
 					System.out.println("x : " + b1.get(0) + ", y = " + b2.get(0));
 				}

@@ -57,7 +57,7 @@ public class Player {
 
 	public void update(float delta, Window window, Camera camera, World world){
 		int speed = 10;
-		System.out.println(String.format("Pos %.8g%n", transform.pos.x));
+		//System.out.println(String.format("Pos %.8g%n", transform.pos.x));
 		Vector2f velocity = new Vector2f();
 		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_A)){
 			transform.pos.add(new Vector3f(-speed*delta,0,0));
@@ -108,7 +108,7 @@ public class Player {
 			//Collision data = bounding_box.getPredictiveCollisionWithStatic(box,velocity,true,delta);
 			Collision data = bounding_box.getCollision(box);
 			if(!data.isIntersecting){
-				System.out.println("Not intersecting");
+				//System.out.println("Not intersecting");
 				//bounding_box.correctPosition(box, data);
 				//transform.pos.add(velocity.x,velocity.y,0);
 				
@@ -116,7 +116,7 @@ public class Player {
 			}
 			else{
 				bounding_box.correctPosition(box, data);
-				System.out.println("intersecting");
+				//System.out.println("intersecting");
 				transform.pos.set(bounding_box.getCenter(),0);
 				
 				
@@ -138,7 +138,7 @@ public class Player {
 					//Collision data = bounding_box.getPredictiveCollisionWithStatic(box,velocity,true,delta);
 					data = bounding_box.getCollision(box);
 					if(!data.isIntersecting){
-						System.out.println("Not intersecting");
+						//System.out.println("Not intersecting");
 						//bounding_box.correctPosition(box, data);
 						//transform.pos.add(velocity.x,velocity.y,0);
 						
@@ -146,7 +146,7 @@ public class Player {
 					}
 					else{
 						bounding_box.correctPosition(box, data);
-						System.out.println("intersecting");
+						//System.out.println("intersecting");
 						transform.pos.set(bounding_box.getCenter(),0);
 						
 						
