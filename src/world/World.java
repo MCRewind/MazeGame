@@ -76,8 +76,7 @@ public class World {
 			pos.y = h-(window.getHeight()/2)-scale;
 		}
 		
-		System.out.println(String.format("PosX %.8g%n", ((float)camera.getPosition().x+(window.getWidth()/2)) / (scale*2)));
-		System.out.println(String.format("PosY %.8g%n", ((float)camera.getPosition().y-(window.getHeight()/2)) / (scale*2)));
+		
 	}
 	
 	
@@ -93,11 +92,27 @@ public class World {
 	}
 	
 	public void setGlobalTile(Tile tile, int x, int y, Window window, Camera camera){
+		
+		//System.out.println(String.format("PosX %.8g%n", ;
+		//System.out.println(String.format("PosY %.8g%n", (;
 		//x = (x+(window.getWidth()/2)) / (scale*2);
 		
 		//y = (y-(window.getHeight()/2)) / (scale*2);
-		x = (x)/(scale*2);
+		
+		float x1 = ((((float)camera.getPosition().x+(window.getWidth()/2)) / (scale*2)) -0.25f);
+		float y1 = ((((float)camera.getPosition().y-(window.getHeight()/2))/ (scale*2)) +0.5f);
+
+		
+		x = (x+(width/2))/(scale*2);
 		y = (y+(height/2))/(scale*2);
+		
+		x += -x1;
+		y += y1;
+		
+		//x += 0.25f;
+		//y += 0.5f;
+		
+		System.out.println(String.format("x1 %.8g%n", x1));
 		tiles[x+y*width] = tile.getId();
 		if(tile.isSolid()){
 			bounding_boxes[x + y * width] = new AABB(new Vector2f(x*2, -y*2), new Vector2f(1,1));
