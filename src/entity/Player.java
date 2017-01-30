@@ -21,6 +21,8 @@ public class Player {
 	private Animation texture;
 	private Transform transform;
 
+	int speed = 10;
+	
 	public Player() {
 		float[] vertices = new float[]{
 				-1f,1f,0, 	//TOP LEFT
@@ -55,26 +57,9 @@ public class Player {
 
 	}
 
-	public void update(float delta, Window window, Camera camera, World world){
-		int speed = 10;
+	public void update(Window window, Camera camera, World world){
 		//System.out.println(String.format("Pos %.8g%n", transform.pos.x));
 		Vector2f velocity = new Vector2f();
-		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_A)){
-			transform.pos.add(new Vector3f(-speed*delta,0,0));
-			//velocity.add(-speed*delta, 0);
-		}
-		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_W)){
-			transform.pos.add(new Vector3f(0,speed*delta,0));
-			//velocity.add(0, speed*delta);
-		}
-		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_D)){
-			transform.pos.add(new Vector3f(speed*delta,0,0));
-			//velocity.add(speed*delta, 0);
-		}
-		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_S)){
-			transform.pos.add(new Vector3f(0,-speed*delta,0));
-			//velocity.add(0, -speed*delta);
-		}
 		
 		//transform.pos.mul(new Vector3f(velocity.x,velocity.y,0));
 		
@@ -167,6 +152,25 @@ public class Player {
 		
 		
 		camera.setPosition(transform.pos.mul(-world.getScale(), new Vector3f()));
+	}
+	
+	public void input(Window window, float delta) {
+		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_A)){
+			transform.pos.add(new Vector3f(-speed*delta,0,0));
+			//velocity.add(-speed*delta, 0);
+		}
+		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_W)){
+			transform.pos.add(new Vector3f(0,speed*delta,0));
+			//velocity.add(0, speed*delta);
+		}
+		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_D)){
+			transform.pos.add(new Vector3f(speed*delta,0,0));
+			//velocity.add(speed*delta, 0);
+		}
+		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_S)){
+			transform.pos.add(new Vector3f(0,-speed*delta,0));
+			//velocity.add(0, -speed*delta);
+		}
 	}
 	
 	public void render(Shader shader, Camera camera){

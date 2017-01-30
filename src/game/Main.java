@@ -35,6 +35,8 @@ public class Main {
 		
 		GL.createCapabilities();
 		
+		Manager manager = new Manager();
+		
 		Camera camera = new Camera(window.getWidth(), window.getHeight());
 		
 		glEnable(GL_TEXTURE_2D);
@@ -98,25 +100,12 @@ public class Main {
 			while(unprocessed >= frame_cap){
 				can_render=true;
 				unprocessed -= frame_cap;
-				if(window.getInput().isKeyReleased(GLFW_KEY_ESCAPE)){
-					//glfwSetWindowShouldClose(win.getWindow(), true);
-					System.out.println("TRUE");
-				}
-				if(window.getInput().isMouseButtonDown(GLFW_MOUSE_BUTTON_1)){ //2 should be changed to the right number
-					//glfwSetWindowShouldClose(win.getWindow(), true);
-					//double x;
-					//double y;
-					DoubleBuffer b1 = BufferUtils.createDoubleBuffer(1);
-					DoubleBuffer b2 = BufferUtils.createDoubleBuffer(1);
-					glfwGetCursorPos(window.getWindow(), b1, b2);
-					//Tile thisTile = world.getTile((int)b1.get(0), (int)b2.get(0));
-					
-					world.setGlobalTile(Tile.test2, (int)b1.get(0), (int)b2.get(0),window, camera);
-					
-					System.out.println("x : " + b1.get(0) + ", y = " + b2.get(0));
-				}
 				
-				player.update((float)frame_cap, window, camera, world);
+				manager.input(window, world, camera);
+				
+				player.input(window, (float)frame_cap);
+				
+				player.update(window, camera, world);
 				
 				world.correctCamera(camera, window);
 				
@@ -129,21 +118,7 @@ public class Main {
 			}
 			
 			if(can_render){
-				glClear(GL_COLOR_BUFFER_BIT);
-				
-				
-				//shader.bind();
-				//shader.setUniform("sampler", 0);
-				//shader.setUniform("projection", camera.getProjection().mul(target));
-				//tex.bind(0);
-				//model.render();
-				
-				world.render(tiles, shader, camera,window);
-				
-				player.render(shader, camera);
-				
-
-				window.swapBuffers();
+				manager.render(window, world, player, camera, tiles, shader);
 				frames++;
 			}
 		}
