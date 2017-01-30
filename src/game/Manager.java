@@ -82,7 +82,7 @@ public class Manager {
 	public void render(Window window) {
 		glClear(GL_COLOR_BUFFER_BIT);
 		
-		System.out.println("BUG: game crashes when many tiles are drawn off screen!");
+		//System.out.println("BUG: game crashes when many tiles are drawn off screen!");
 		
 		world.render(tiles, shader, camera, window);
 		
