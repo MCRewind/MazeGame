@@ -9,6 +9,8 @@ import static org.lwjgl.opengl.GL11.glClear;
 import java.nio.DoubleBuffer;
 import java.util.ArrayList;
 
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 
 import entity.Player;
@@ -16,15 +18,19 @@ import io.Window;
 import render.Camera;
 import render.Shader;
 import render.ui.Canvas;
+import render.ui.Container;
+import render.ui.element.UIButton;
 import world.Tile;
 import world.TileRenderer;
 import world.World;
 
 public class Manager {
 
-	ArrayList canvi = new ArrayList<Canvas>();
+	ArrayList<Canvas> world_of_wow_swag_$$ = new ArrayList<>();
 	
 	World world = new World();
+	
+	Canvas gameCanvas = new Canvas(0);
 	
 	Camera camera;
 	
@@ -36,6 +42,7 @@ public class Manager {
 	
 	public Manager(Window window) {
 		worldInit();
+		elementInit();
 		
 		shader.createFragmentShader("fragment");
 		shader.createVertexShader("vertex");
@@ -81,7 +88,18 @@ public class Manager {
 		
 		player.render(shader, camera);
 
+		Matrix4f k;
+		k = new Matrix4f().setTranslation(new Vector3f(0));
+		k.scale(32); //Makes the tiles 32 x 32
+		
+		gameCanvas.getContainer(0).render(10, 10, shader, k, camera);
+		
 		window.swapBuffers();
+	}
+	
+	public void elementInit() {
+		gameCanvas.addContainer(new Container(0, 0));
+		gameCanvas.getContainer(0).addElement(new UIButton("player.png"));
 	}
 	
 	public void worldInit() {

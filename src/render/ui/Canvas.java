@@ -6,14 +6,18 @@ public class Canvas {
 
 	int layer;
 	
-	ArrayList panels = new ArrayList<Panel>();
+	ArrayList<Container> containers = new ArrayList<>();
 	
 	public Canvas(int layer) {
 		this.layer = layer;
 	}
 	
-	public void addPanel(Panel panel) {
-		panels.add(panel);
+	public void addContainer(Container container) {
+		containers.add(container);
+	}
+	
+	public Container getContainer(int id) {
+		return containers.get(id);
 	}
 	
 }
