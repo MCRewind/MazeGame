@@ -31,12 +31,6 @@ public class World {
 	}
 	
 	public void render(TileRenderer render, Shader shader, Camera cam, Window window){
-//		for(int i = 0; i < height; i++){
-//			for(int j = 0; j < width; j++){
-//				render.renderTile(tiles[j+i * width], j, -i, shader, world, cam);
-//				
-//			}
-//		}
 		int posX = ((int)cam.getPosition().x+(window.getWidth()/2)) / (scale*2);
 		int posY = ((int)cam.getPosition().y-(window.getHeight()/2)) / (scale*2);
 		
@@ -59,9 +53,7 @@ public class World {
 		
 		int targetx = (w + (window.getWidth()/2)+scale);
 		int targety = (window.getWidth()/2)-scale;
-		
-		//System.out.println("Positionx " + pos.x + " "+ targetx);
-		//System.out.println("Positiony " + pos.y + " "+ targety);
+
 		if(pos.x > -(window.getWidth()/2)+scale){
 			pos.x = -(window.getWidth()/2)+scale;
 		}

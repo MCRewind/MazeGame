@@ -14,12 +14,11 @@ import render.Shader;
 import render.Texture;
 import world.World;
 
-public class Player {
+public class Player extends Entity {
 	private Model model;
 	private AABB bounding_box;
 	//private Texture texture;
 	private Animation texture;
-	private Transform transform;
 
 	int speed = 10;
 	
@@ -47,13 +46,13 @@ public class Player {
 		//model.
 		//this.texture = new Texture("player.png");
 		this.texture = new Animation(8,5,"wait");
-		transform = new Transform();
-		transform.scale = new Vector3f(32,32,1);
-		transform.pos.x = 13;
-		transform.pos.y = -13;
+		setTransform(new Transform()); 
+		getTransform().scale = new Vector3f(32,32,1);
+		getTransform().pos.x = 13;
+		getTransform().pos.y = -13;
 		
 		System.out.println("intersecting1");
-		bounding_box = new AABB(new Vector2f(transform.pos.x,transform.pos.y), new Vector2f(1,1));
+		bounding_box = new AABB(new Vector2f(getTransform().pos.x,getTransform().pos.y), new Vector2f(1,1));
 
 	}
 
@@ -63,14 +62,14 @@ public class Player {
 		
 		//transform.pos.mul(new Vector3f(velocity.x,velocity.y,0));
 		
-		bounding_box.getCenter().set(transform.pos.x,transform.pos.y);
+		bounding_box.getCenter().set(getTransform().pos.x,getTransform().pos.y);
 		
 		AABB[] boxes = new AABB[25];
 		for(int i = 0; i< 5; i ++){
 			for(int j = 0; j< 5; j ++){
 				boxes[i + j * 5] = world.getTileBoundingBox(
-						(int)(((transform.pos.x/2)+0.5f) - (5/2)) + i,
-						(int)(((-transform.pos.y/2)+0.5f) - (5/2)) + j
+						(int)(((getTransform().pos.x/2)+0.5f) - (5/2)) + i,
+						(int)(((-getTransform().pos.y/2)+0.5f) - (5/2)) + j
 						);
 			}
 		}
@@ -81,8 +80,8 @@ public class Player {
 			if(boxes[i] != null){
 				if(box == null) box = boxes[i];
 				
-				Vector2f length1 = box.getCenter().sub(transform.pos.x,transform.pos.y, new Vector2f());
-				Vector2f length2 = boxes[i].getCenter().sub(transform.pos.x,transform.pos.y, new Vector2f());
+				Vector2f length1 = box.getCenter().sub(getTransform().pos.x,getTransform().pos.y, new Vector2f());
+				Vector2f length2 = boxes[i].getCenter().sub(getTransform().pos.x,getTransform().pos.y, new Vector2f());
 				
 				if(length1.lengthSquared() > length2.lengthSquared()){
 					box = boxes[i];
@@ -102,7 +101,7 @@ public class Player {
 			else{
 				bounding_box.correctPosition(box, data);
 				//System.out.println("intersecting");
-				transform.pos.set(bounding_box.getCenter(),0);
+				getTransform().pos.set(bounding_box.getCenter(),0);
 				
 				
 				//box = null;
@@ -111,8 +110,8 @@ public class Player {
 					if(boxes[i] != null){
 						if(box == null) box = boxes[i];
 						
-						Vector2f length1 = box.getCenter().sub(transform.pos.x,transform.pos.y, new Vector2f());
-						Vector2f length2 = boxes[i].getCenter().sub(transform.pos.x,transform.pos.y, new Vector2f());
+						Vector2f length1 = box.getCenter().sub(getTransform().pos.x,getTransform().pos.y, new Vector2f());
+						Vector2f length2 = boxes[i].getCenter().sub(getTransform().pos.x,getTransform().pos.y, new Vector2f());
 						
 						if(length1.lengthSquared() > length2.lengthSquared()){
 							box = boxes[i];
@@ -132,7 +131,7 @@ public class Player {
 					else{
 						bounding_box.correctPosition(box, data);
 						//System.out.println("intersecting");
-						transform.pos.set(bounding_box.getCenter(),0);
+						getTransform().pos.set(bounding_box.getCenter(),0);
 						
 						
 					}
@@ -151,24 +150,24 @@ public class Player {
 		
 		
 		
-		camera.setPosition(transform.pos.mul(-world.getScale(), new Vector3f()));
+		camera.setPosition(getTransform().pos.mul(-world.getScale(), new Vector3f()));
 	}
 	
 	public void input(Window window, float delta) {
 		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_A)){
-			transform.pos.add(new Vector3f(-speed*delta,0,0));
+			getTransform().pos.add(new Vector3f(-speed*delta,0,0));
 			//velocity.add(-speed*delta, 0);
 		}
 		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_W)){
-			transform.pos.add(new Vector3f(0,speed*delta,0));
+			getTransform().pos.add(new Vector3f(0,speed*delta,0));
 			//velocity.add(0, speed*delta);
 		}
 		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_D)){
-			transform.pos.add(new Vector3f(speed*delta,0,0));
+			getTransform().pos.add(new Vector3f(speed*delta,0,0));
 			//velocity.add(speed*delta, 0);
 		}
 		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_S)){
-			transform.pos.add(new Vector3f(0,-speed*delta,0));
+			getTransform().pos.add(new Vector3f(0,-speed*delta,0));
 			//velocity.add(0, -speed*delta);
 		}
 	}
@@ -176,7 +175,7 @@ public class Player {
 	public void render(Shader shader, Camera camera){
 		shader.bind();
 		shader.setUniform("sampler", 0);
-		shader.setUniform("projection", transform.getProjection(camera.getProjection()));
+		shader.setUniform("projection", getTransform().getProjection(camera.getProjection()));
 		texture.bind(0);
 		model.render();
 	}

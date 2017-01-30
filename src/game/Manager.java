@@ -7,6 +7,7 @@ import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
 
 import java.nio.DoubleBuffer;
+import java.util.ArrayList;
 
 import org.lwjgl.BufferUtils;
 
@@ -14,13 +15,42 @@ import entity.Player;
 import io.Window;
 import render.Camera;
 import render.Shader;
+import render.ui.Canvas;
 import world.Tile;
 import world.TileRenderer;
 import world.World;
 
 public class Manager {
 
-	public void input(Window window, World world, Camera camera) {
+	ArrayList canvi = new ArrayList<Canvas>();
+	
+	World world = new World();
+	
+	Camera camera;
+	
+	TileRenderer tiles = new TileRenderer();
+	
+	Player player = new Player();
+	
+	Shader shader = new Shader();
+	
+	public Manager(Window window) {
+		worldInit();
+		
+		shader.createFragmentShader("fragment");
+		shader.createVertexShader("vertex");
+		shader.attach();
+		
+		camera = new Camera(window.getWidth(), window.getHeight());
+	}
+	
+	public void update(Window window) {
+		player.update(window, camera, world);
+		
+		world.correctCamera(camera, window);
+	}
+	
+	public void input(Window window, double frame_cap) {
 		if(window.getInput().isKeyReleased(GLFW_KEY_ESCAPE)){
 			//glfwSetWindowShouldClose(win.getWindow(), true);
 			System.out.println("TRUE");
@@ -38,24 +68,45 @@ public class Manager {
 			
 			System.out.println("x : " + b1.get(0) + ", y = " + b2.get(0));
 		}
+		
+		player.input(window, (float)frame_cap);
 	}
 
-	public void render(Window window, World world, Player player, Camera camera, TileRenderer tiles, Shader shader) {
+	public void render(Window window) {
 		glClear(GL_COLOR_BUFFER_BIT);
 		
+		System.out.println("BUG: game crashes when many tiles are drawn off screen!");
 		
-		//shader.bind();
-		//shader.setUniform("sampler", 0);
-		//shader.setUniform("projection", camera.getProjection().mul(target));
-		//tex.bind(0);
-		//model.render();
-		
-		world.render(tiles, shader, camera,window);
+		world.render(tiles, shader, camera, window);
 		
 		player.render(shader, camera);
-		
 
 		window.swapBuffers();
+	}
+	
+	public void worldInit() {
+		for(int a = 0; a < 30;a++){
+			world.setTile(Tile.test2, a, 0);
+		}
+		
+		for(int a = 0; a < 30;a++){
+			world.setTile(Tile.test2, 0, a);
+		}
+		
+		for(int a = 0; a < 30;a++){
+			world.setTile(Tile.test2, 30, a);
+		}
+		
+		for(int a = 0; a < 30;a++){
+			world.setTile(Tile.test2, a, 30);
+		}
+		
+		for(int i=6; i < 12; i++){
+			for(int j=6; j < 12; j++){
+				//ds
+				world.setTile(Tile.test2, i, j);
+			}
+		}
 	}
 	
 }

@@ -2,20 +2,10 @@ package game;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
-import java.nio.DoubleBuffer;
-
-import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL;
 
-import entity.Player;
 import io.Timer;
 import io.Window;
-import render.Camera;
-import render.Shader;
-import world.Tile;
-import world.TileRenderer;
-import world.World;
-
 
 public class Main {
 
@@ -32,54 +22,16 @@ public class Main {
 		window.createWindow("Game");
 		window.setFullscreen(true);
 		
-		
 		GL.createCapabilities();
-		
-		Manager manager = new Manager();
-		
-		Camera camera = new Camera(window.getWidth(), window.getHeight());
 		
 		glEnable(GL_TEXTURE_2D);
 		
-		TileRenderer tiles = new TileRenderer();
+		Manager manager = new Manager(window);
 		
-		Shader shader = new Shader();
-		shader.createFragmentShader("fragment");
-		shader.createVertexShader("vertex");
-		shader.attach();
-		World world = new World();
+		/*
+		 * GAME LOOP
+		*/
 		
-		Player player = new Player();
-		
-		
-		//world.setTile(Tile.test2, 4, 4);
-		//world.setTile(Tile.test2, 4, 5);
-		//world.setTile(Tile.test2, 4, 6);
-		//world.setTile(Tile.test2, 4, 7);
-		///*
-		for(int a = 0; a < 30;a++){
-			world.setTile(Tile.test2, a, 0);
-		}
-		
-		for(int a = 0; a < 30;a++){
-			world.setTile(Tile.test2, 0, a);
-		}
-		
-		for(int a = 0; a < 30;a++){
-			world.setTile(Tile.test2, 30, a);
-		}
-		
-		for(int a = 0; a < 30;a++){
-			world.setTile(Tile.test2, a, 30);
-		}
-		
-		for(int i=6; i < 12; i++){
-			for(int j=6; j < 12; j++){
-				//ds
-				world.setTile(Tile.test2, i, j);
-			}
-		}
-		//*/
 		double frame_cap = 1.0/60.0;
 		
 		double frame_time = 0;
@@ -101,13 +53,9 @@ public class Main {
 				can_render=true;
 				unprocessed -= frame_cap;
 				
-				manager.input(window, world, camera);
+				manager.input(window, frame_cap);
 				
-				player.input(window, (float)frame_cap);
-				
-				player.update(window, camera, world);
-				
-				world.correctCamera(camera, window);
+				manager.update(window);
 				
 				window.update();
 				if(frame_time >= 1.0){
@@ -118,7 +66,7 @@ public class Main {
 			}
 			
 			if(can_render){
-				manager.render(window, world, player, camera, tiles, shader);
+				manager.render(window);
 				frames++;
 			}
 		}
@@ -127,7 +75,6 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		
 		new Main();
 	}
 }
