@@ -50,9 +50,6 @@ public class World {
 		
 		int w = -width * scale * 2;
 		int h = height * scale * 2;
-		
-		int targetx = (w + (window.getWidth()/2)+scale);
-		int targety = (window.getWidth()/2)-scale;
 
 		if(pos.x > -(window.getWidth()/2)+scale){
 			pos.x = -(window.getWidth()/2)+scale;
@@ -157,4 +154,11 @@ public class World {
 		return scale;
 	}
 	
+	public int getWidth() {
+		return width * 2;
+	}
+	
+	public int getHeight() {
+		return height * 2;
+	}
 }
