@@ -69,13 +69,11 @@ public class Manager {
 			System.out.println("x : " + b1.get(0) + ", y = " + b2.get(0));
 		}
 		
-		player.input(window, (float)frame_cap);
+		player.input(window, world, (float)frame_cap);
 	}
 
 	public void render(Window window) {
 		glClear(GL_COLOR_BUFFER_BIT);
-		
-		System.out.println("BUG: game crashes when many tiles are drawn off screen!");
 		
 		world.render(tiles, shader, camera, window);
 		
@@ -85,28 +83,6 @@ public class Manager {
 	}
 	
 	public void worldInit() {
-		for(int a = 0; a < 30;a++){
-			world.setTile(Tile.test2, a, 0);
-		}
-		
-		for(int a = 0; a < 30;a++){
-			world.setTile(Tile.test2, 0, a);
-		}
-		
-		for(int a = 0; a < 30;a++){
-			world.setTile(Tile.test2, 30, a);
-		}
-		
-		for(int a = 0; a < 30;a++){
-			world.setTile(Tile.test2, a, 30);
-		}
-		
-		for(int i=6; i < 12; i++){
-			for(int j=6; j < 12; j++){
-				//ds
-				world.setTile(Tile.test2, i, j);
-			}
-		}
 	}
 	
 }
