@@ -41,6 +41,9 @@ public class Manager {
 	Shader shader = new Shader();
 	
 	public Manager(Window window) {
+		//Add canvi to arraylist
+		world_of_wow_swag_$$.add(gameCanvas);
+		
 		worldInit();
 		elementInit();
 		
@@ -76,7 +79,7 @@ public class Manager {
 			System.out.println("x : " + b1.get(0) + ", y = " + b2.get(0));
 		}
 		
-		player.input(window, (float)frame_cap);
+		player.input(window, world, (float)frame_cap);
 	}
 
 	public void render(Window window) {
@@ -88,18 +91,25 @@ public class Manager {
 		
 		player.render(shader, camera);
 
-		Matrix4f k;
-		k = new Matrix4f().setTranslation(new Vector3f(0));
-		k.scale(32); //Makes the tiles 32 x 32
+		int scale = 32;
 		
-		gameCanvas.getContainer(0).render(10, 10, shader, k, camera);
+		Matrix4f world;
+		world = new Matrix4f().setTranslation(new Vector3f(0));
+		world.scale(scale); //Makes the tiles 32 x 32
+		
+		int posX = ((int)camera.getPosition().x+(window.getWidth()/2)) / (scale*2);
+		int posY = ((int)camera.getPosition().y-(window.getHeight()/2)) / (scale*2);
+		
+		for(Canvas c : world_of_wow_swag_$$) {
+			c.getContainer(0).render(6, -6, shader, world, camera);
+		}
 		
 		window.swapBuffers();
 	}
 	
 	public void elementInit() {
 		gameCanvas.addContainer(new Container(0, 0));
-		gameCanvas.getContainer(0).addElement(new UIButton("player.png"));
+		gameCanvas.getContainer(0).addElement(new UIButton("player"));
 	}
 	
 	public void worldInit() {

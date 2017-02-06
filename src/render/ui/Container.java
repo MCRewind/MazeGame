@@ -37,10 +37,16 @@ public class Container {
 	public void render(int x, int y, Shader shader, Matrix4f world, Camera cam){
 		shader.bind();
 		
-		Matrix4f tile_pos = new Matrix4f().translate(new Vector3f(x*2,y*2,0));
+		for(int i = 0; i < uiElements.size(); i++) {
+			if (uiElements.get(i).getType() == 2) {
+				uiElements.get(i).getTexture().bind(0);
+			}
+		}
+		
+		Matrix4f pos = new Matrix4f().translate(new Vector3f(2*x, 2*y, 0));
 		Matrix4f target = new Matrix4f();
-		cam.getProjection().mul(world,target);
-		target.mul(tile_pos);
+		cam.getProjection().mul(world, target);
+		target.mul(pos);
 		
 		shader.setUniform("sampler", 0);
 		shader.setUniform("projection", target);

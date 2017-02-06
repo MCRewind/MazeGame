@@ -20,7 +20,7 @@ public class Player extends Entity {
 	//private Texture texture;
 	private Animation texture;
 
-	int speed = 40;
+	int speed = 15;
 	
 	public Player() {
 		float[] vertices = new float[]{
