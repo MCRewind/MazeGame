@@ -148,7 +148,7 @@ public class Player extends Entity {
 	public void input(Window window, World world, float delta) {
 		float xChange = 0;
 		float yChange = 0;
-		System.out.println(world.getWidth() + "," + getTransform().pos.x);
+		//System.out.println(world.getWidth() + "," + getTransform().pos.x);
 		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_W))
 			yChange += speed * delta;
 		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_A))

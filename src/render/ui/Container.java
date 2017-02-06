@@ -34,7 +34,7 @@ public class Container {
 		uiElements.add(element);
 	}
 	
-	public void render(int x, int y, Shader shader, Matrix4f world, Camera cam){
+	public void render(int x, int y, Shader shader, Camera cam){
 		shader.bind();
 		
 		for(int i = 0; i < uiElements.size(); i++) {
@@ -43,10 +43,8 @@ public class Container {
 			}
 		}
 		
-		Matrix4f pos = new Matrix4f().translate(new Vector3f(2*x, 2*y, 0));
-		Matrix4f target = new Matrix4f();
-		cam.getProjection().mul(world, target);
-		target.mul(pos);
+		Matrix4f pos = new Matrix4f().translate(new Vector3f(x, y, 0));
+		Matrix4f target = cam.getUntransformedProjection().mul(pos, new Matrix4f()).scale(new Vector3f(32, 32, 0), new Matrix4f());
 		
 		shader.setUniform("sampler", 0);
 		shader.setUniform("projection", target);

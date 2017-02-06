@@ -97,11 +97,15 @@ public class Manager {
 		world = new Matrix4f().setTranslation(new Vector3f(0));
 		world.scale(scale); //Makes the tiles 32 x 32
 		
-		int posX = ((int)camera.getPosition().x+(window.getWidth()/2)) / (scale*2);
-		int posY = ((int)camera.getPosition().y-(window.getHeight()/2)) / (scale*2);
+		//int posX = ((int)camera.getPosition().x+(window.getWidth()/2)) / (scale*2);
+		//int posY = ((int)camera.getPosition().y-(window.getHeight()/2)) / (scale*2);
+		
+		int posX = ((int)camera.getPosition().x);
+		int posY = ((int)camera.getPosition().y);
+		System.out.println(camera.getPosition());
 		
 		for(Canvas c : world_of_wow_swag_$$) {
-			c.getContainer(0).render(6, -6, shader, world, camera);
+			c.getContainer(0).render(10, 10, shader, camera);
 		}
 		
 		window.swapBuffers();
