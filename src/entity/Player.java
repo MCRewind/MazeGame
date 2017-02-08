@@ -74,6 +74,7 @@ public class Player extends Entity {
 		}
 		
 		AABB box = null;
+		AABB box2 = null;
 		
 		for(int i = 0; i < boxes.length; i++){
 			if(boxes[i] != null){
@@ -112,7 +113,9 @@ public class Player extends Entity {
 						Vector2f length2 = boxes[i].getCenter().sub(getTransform().pos.x,getTransform().pos.y, new Vector2f());
 						
 						if(length1.lengthSquared() > length2.lengthSquared()){
+							box2 = box;
 							box = boxes[i];
+							
 						}
 					}
 				}
@@ -123,13 +126,31 @@ public class Player extends Entity {
 						//System.out.println("Not intersecting");
 						//bounding_box.correctPosition(box, data);
 						//transform.pos.add(velocity.x,velocity.y,0);
+						if(box2 != null){
+						data = bounding_box.getCollision(box2);
+						if(!data.isIntersecting){
+							//System.out.println("Not intersecting");
+							//bounding_box.correctPosition(box, data);
+							//transform.pos.add(velocity.x,velocity.y,0);
+						}
+						else{
+							bounding_box.correctPosition(box2, data);
+							//System.out.println("intersecting");
+							getTransform().pos.set(bounding_box.getCenter(),0);
+						}
+						}
 					}
 					else{
 						bounding_box.correctPosition(box, data);
 						//System.out.println("intersecting");
 						getTransform().pos.set(bounding_box.getCenter(),0);
 					}
+					
+
+					
 				}
+				
+				
 			}
 			
 			
@@ -148,7 +169,7 @@ public class Player extends Entity {
 	public void input(Window window, World world, float delta) {
 		float xChange = 0;
 		float yChange = 0;
-		System.out.println(world.getWidth() + "," + getTransform().pos.x);
+		//System.out.println(world.getWidth() + "," + getTransform().pos.x);
 		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_W))
 			yChange += speed * delta;
 		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_A))
