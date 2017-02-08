@@ -11,6 +11,10 @@ public class AABB {
 		this.half_extent = half_extent;
 	}
 	
+	public boolean getPointCollision(float x, float y) {
+		return x > center.x - half_extent.x && x < center.x + half_extent.x && y > center.y - half_extent.y && y < center.y + half_extent.y;
+	}
+	
 	public Collision getCollision(AABB box2){
 		Vector2f distance = box2.center.sub(center, new Vector2f());
 		distance.x = (float)Math.abs(distance.x);
