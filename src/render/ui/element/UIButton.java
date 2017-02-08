@@ -22,7 +22,6 @@ public class UIButton extends UIElement {
 		DoubleBuffer b1 = BufferUtils.createDoubleBuffer(1);
 		DoubleBuffer b2 = BufferUtils.createDoubleBuffer(1);
 		glfwGetCursorPos(window.getWindow(), b1, b2);
-		System.out.println((float)(b1.get(0) - (window.getWidth() / 2)) + "," + (float)(b2.get(0) - (window.getHeight() / 2)));
-		return bounds.getPointCollision((float)(b1.get(0) - (window.getWidth() / 2)), (float)(b2.get(0) + (window.getHeight() / 2))) && window.getInput().isMouseButtonDown(GLFW_MOUSE_BUTTON_1);
+		return bounds.getPointCollision((float)b1.get(0), (float)b2.get(0)) && window.getInput().isMouseButtonDown(GLFW_MOUSE_BUTTON_1);
 	}
 }

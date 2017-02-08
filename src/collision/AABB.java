@@ -12,7 +12,7 @@ public class AABB {
 	}
 	
 	public boolean getPointCollision(float x, float y) {
-		return x > center.x - half_extent.x && x < center.x + half_extent.x && y > center.y - half_extent.y && y < center.y + half_extent.y;
+		return x >= center.x - half_extent.x && x <= center.x + half_extent.x && y >= center.y - half_extent.y && y <= center.y + half_extent.y;
 	}
 	
 	public Collision getCollision(AABB box2){

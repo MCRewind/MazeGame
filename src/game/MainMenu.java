@@ -3,6 +3,7 @@ package game;
 import io.Window;
 import render.Camera;
 import render.Shader;
+import render.Texture;
 import render.ui.Canvas;
 import render.ui.Container;
 import render.ui.element.UIButton;
