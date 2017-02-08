@@ -28,10 +28,10 @@ public class UIElement {
 		width = texture.getWidth() * scale;
 		height = texture.getHeight() * scale;
 		float[] vertices = new float[]{
-				-width / 2,  height / 2, 0, 	//TOP LEFT
-				 width / 2,  height / 2, 0,	//TOP RIGHT
-				 width / 2, -height / 2, 0,	//BOTTOM RIGHT
-				-width / 2, -height / 2, 0,	//BOTTOM LEFT
+				0,     -height, 0, //TOP LEFT
+				width, -height, 0, //TOP RIGHT
+				width,  0,      0, //BOTTOM RIGHT
+				0,      0,      0, //BOTTOM LEFT
 		};
 		
 		float[] textureCoords = new float[] {
