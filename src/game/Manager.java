@@ -50,7 +50,6 @@ public class Manager {
 		//Add canvi to arraylist
 		world_of_wow_swag_$$.add(gameCanvas);
 		
-		
 		shader.createFragmentShader("fragment");
 		shader.createVertexShader("vertex");
 		shader.attach();

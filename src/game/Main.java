@@ -18,7 +18,7 @@ public class Main {
 		}
 		
 		Window window = new Window();
-		window.setSize(960, 540);
+		window.setSize(1920, 1080);
 		window.createWindow("Game");
 		window.setFullscreen(true);
 		
