@@ -1,8 +1,9 @@
- package game;
+package game;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_1;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_2;
 import static org.lwjgl.glfw.GLFW.glfwGetCursorPos;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowShouldClose;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
 
@@ -12,8 +13,6 @@ import java.util.ArrayList;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
-
-import com.sun.glass.ui.Menu;
 
 import entity.Player;
 import io.Window;
@@ -30,11 +29,11 @@ public class Manager {
 
 	boolean playing = false;
 	
+	ArrayList<Canvas> world_of_wow_swag_$$ = new ArrayList<>();
+
 	MainMenu menu;
 	
-	ArrayList<Canvas> world_of_wow_swag_$$ = new ArrayList<>();
-	
-	World world;
+	World world = new World();
 	
 	Canvas gameCanvas = new Canvas(0);
 	
@@ -48,7 +47,8 @@ public class Manager {
 	
 	public Manager(Window window) {
 		//Add canvi to arraylist
-		world_of_wow_swag_$$.add(gameCanvas);
+		
+		worldInit();
 		
 		shader.createFragmentShader("fragment");
 		shader.createVertexShader("vertex");
@@ -74,12 +74,12 @@ public class Manager {
 	}
 	
 	public void input(Window window, double frame_cap) {
-		if(playing) {
-			if(window.getInput().isKeyReleased(GLFW_KEY_ESCAPE)){
-				//glfwSetWindowShouldClose(win.getWindow(), true);
-				System.out.println("TRUE");
-			}
-			/*if(window.getInput().isMouseButtonDown(GLFW_MOUSE_BUTTON_1)) { //2 should be changed to the right number
+		if(window.getInput().isKeyReleased(GLFW_KEY_ESCAPE)){
+			glfwSetWindowShouldClose(window.getWindow(), true);
+			System.out.println("TRUE");
+		}
+		if (playing) {
+			if(window.getInput().isMouseButtonDown(GLFW_MOUSE_BUTTON_2)){ //2 should be changed to the right number
 				//glfwSetWindowShouldClose(win.getWindow(), true);
 				//double x;
 				//double y;
@@ -91,7 +91,7 @@ public class Manager {
 				world.setGlobalTile(Tile.test2, (int)b1.get(0), (int)b2.get(0), window, camera);
 				
 				System.out.println("x : " + b1.get(0) + ", y = " + b2.get(0));
-			}*/
+			}
 			
 			player.input(window, world, (float)frame_cap);
 		}
@@ -125,13 +125,23 @@ public class Manager {
 	public void worldInit() {
 		for(int a = 0; a < 30;a++){
 			world.setTile(Tile.test2, a, 0);
+		}
+		
+		for(int a = 0; a < 30;a++){
 			world.setTile(Tile.test2, 0, a);
+		}
+		
+		for(int a = 0; a < 30;a++){
 			world.setTile(Tile.test2, 30, a);
+		}
+		
+		for(int a = 0; a < 30;a++){
 			world.setTile(Tile.test2, a, 30);
 		}
 		
 		for(int i=6; i < 12; i++){
 			for(int j=6; j < 12; j++){
+				//ds
 				world.setTile(Tile.test2, i, j);
 			}
 		}
