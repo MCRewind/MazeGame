@@ -20,7 +20,7 @@ public class Player extends Entity {
 	//private Texture texture;
 	private Animation texture;
 
-	int speed = 15;
+	int speed = 5;
 	
 	public Player() {
 		float[] vertices = new float[]{
@@ -63,6 +63,52 @@ public class Player extends Entity {
 		
 		bounding_box.getCenter().set(getTransform().pos.x,getTransform().pos.y);
 		
+		
+		
+		/*
+		
+		AABB[] boxes = new AABB[25];
+		for(int i = 0; i< 5; i ++){
+			for(int j = 0; j< 5; j ++){
+				boxes[i + j * 5] = world.getTileBoundingBox(
+						(int)(((getTransform().pos.x/2)+0.5f) - (5/2)) + i,
+						(int)(((getTransform().pos.y/2)+0.5f) - (5/2)) + j
+						);
+			}
+		}
+		
+		AABB box = null;
+		for(int i = 0; i < boxes.length; i++){
+			if(boxes[i] != null){
+				if(box == null) box = boxes[i];
+				
+				Vector2f length1 = box.getCenter().sub(getTransform().pos.x,getTransform().pos.y, new Vector2f());
+				Vector2f length2 = boxes[i].getCenter().sub(getTransform().pos.x,getTransform().pos.y, new Vector2f());
+				
+				if(length1.lengthSquared() > length2.lengthSquared()){
+					box = boxes[i];
+				}
+			}
+		}
+		if(box != null){
+			Collision data = bounding_box.getCollision(box);
+			if(data.isIntersecting){
+				bounding_box.correctPosition(box, data);
+				getTransform().pos.set(bounding_box.getCenter(),0);
+			}
+		}
+		
+		camera.setPosition(getTransform().pos.mul(-world.getScale(), new Vector3f()));
+		
+		
+		
+		*/
+		
+		
+		
+		
+		
+		
 		AABB[] boxes = new AABB[25];
 		for(int i = 0; i< 5; i ++){
 			for(int j = 0; j< 5; j ++){
@@ -74,6 +120,7 @@ public class Player extends Entity {
 		}
 		
 		AABB box = null;
+		//AABB box2 = null;
 		
 		for(int i = 0; i < boxes.length; i++){
 			if(boxes[i] != null){
@@ -90,20 +137,21 @@ public class Player extends Entity {
 		if(box != null){
 			//Collision data = bounding_box.getPredictiveCollisionWithStatic(box,velocity,true,delta);
 			Collision data = bounding_box.getCollision(box);
+			getTransform().pos.set(bounding_box.getCenter(),0);
 			if(!data.isIntersecting){
 				//System.out.println("Not intersecting");
 				//bounding_box.correctPosition(box, data);
 				//transform.pos.add(velocity.x,velocity.y,0);
-				
+				getTransform().pos.add(velocity.x,velocity.y,0);
 				
 			}
 			else{
 				bounding_box.correctPosition(box, data);
+				//getTransform().pos.set(bounding_box.getCenter(),0);
 				//System.out.println("intersecting");
 				getTransform().pos.set(bounding_box.getCenter(),0);
 				
 				//box = null;
-				
 				for(int i = 0; i < boxes.length; i++){
 					if(boxes[i] != null){
 						if(box == null) box = boxes[i];
@@ -112,25 +160,85 @@ public class Player extends Entity {
 						Vector2f length2 = boxes[i].getCenter().sub(getTransform().pos.x,getTransform().pos.y, new Vector2f());
 						
 						if(length1.lengthSquared() > length2.lengthSquared()){
+							//box2 = box;
 							box = boxes[i];
+							
 						}
 					}
 				}
 				if(box != null){
 					//Collision data = bounding_box.getPredictiveCollisionWithStatic(box,velocity,true,delta);
 					data = bounding_box.getCollision(box);
+					getTransform().pos.set(bounding_box.getCenter(),0);
 					if(!data.isIntersecting){
-						//System.out.println("Not intersecting");
+						System.out.println("Not intersecting1");
 						//bounding_box.correctPosition(box, data);
 						//transform.pos.add(velocity.x,velocity.y,0);
+						getTransform().pos.add(velocity.x,velocity.y,0);
+						
 					}
 					else{
 						bounding_box.correctPosition(box, data);
 						//System.out.println("intersecting");
 						getTransform().pos.set(bounding_box.getCenter(),0);
+						System.out.println("intersecting11111");
+						//ddddddddbounding_box.correctPosition(box, data);
+						//getTransform().pos.set(bounding_box.getCenter(),0);
+						//System.out.println("intersecting");
+						//getTransform().pos.set(bounding_box.getCenter(),0);
+						
+						//box = null;
+						for(int i = 0; i < boxes.length; i++){
+							if(boxes[i] != null){
+								if(box == null) box = boxes[i];
+								
+								Vector2f length1 = box.getCenter().sub(getTransform().pos.x,getTransform().pos.y, new Vector2f());
+								Vector2f length2 = boxes[i].getCenter().sub(getTransform().pos.x,getTransform().pos.y, new Vector2f());
+								
+								if(length1.lengthSquared() > length2.lengthSquared()){
+									//box2 = box;
+									box = boxes[i];
+									
+								}
+							}
+						}
+						if(box != null){
+							//Collision data = bounding_box.getPredictiveCollisionWithStatic(box,velocity,true,delta);
+							data = bounding_box.getCollision(box);
+							getTransform().pos.set(bounding_box.getCenter(),0);
+							if(!data.isIntersecting){
+								System.out.println("Not intersecting1");
+								//bounding_box.correctPosition(box, data);
+								//transform.pos.add(velocity.x,velocity.y,0);
+								getTransform().pos.add(velocity.x,velocity.y,0);
+								
+							}
+							else{
+								bounding_box.correctPosition(box, data);
+								//System.out.println("intersecting");
+								getTransform().pos.set(bounding_box.getCenter(),0);
+								System.out.println("intersecting11111");
+							}
+						}
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 					}
+					
+
+					
 				}
+				
+				
 			}
+			//getTransform().pos.set(bounding_box.getCenter(),0);
 			
 			
 		}
@@ -143,6 +251,7 @@ public class Player extends Entity {
 		
 		
 		camera.setPosition(getTransform().pos.mul(-world.getScale(), new Vector3f()));
+		
 	}
 	
 	public void input(Window window, World world, float delta) {
