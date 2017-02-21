@@ -17,8 +17,6 @@ public class Model {
 	
 	public Model(float[] vertices, float[] tex_coords,int[] indices) {
 		draw_count = indices.length; //change to 2 for x and y only -- nvm
-		
-		
 
 		v_id = glGenBuffers();
 		glBindBuffer(GL_ARRAY_BUFFER, v_id);
@@ -34,9 +32,7 @@ public class Model {
 		IntBuffer buffer = BufferUtils.createIntBuffer(indices.length);
 		buffer.put(indices);
 		buffer.flip();
-		
-		
-		
+
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);

@@ -38,8 +38,7 @@ public class World {
 			for(int j=0; j < view; j++){
 				Tile t = getTile(i-posX,j+posY);
 				if(t != null){
-					render.renderTile(t, i-posX,-j-posY,shader,world,cam);
-					
+					render.renderTile(t, i-posX,-j-posY,shader,world,cam);	
 				}
 			}
 		}

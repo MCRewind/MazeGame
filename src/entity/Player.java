@@ -20,6 +20,8 @@ public class Player extends Entity {
 	//private Texture texture;
 	private Animation texture;
 
+	Vector2f velocity = new Vector2f();
+	
 	int speed = 5;
 	
 	public Player() {
@@ -57,7 +59,7 @@ public class Player extends Entity {
 
 	public void update(Window window, Camera camera, World world){
 		//System.out.println(String.format("Pos %.8g%n", transform.pos.x));
-		Vector2f velocity = new Vector2f();
+		//Vector2f velocity = new Vector2f();
 		
 		//transform.pos.mul(new Vector3f(velocity.x,velocity.y,0));
 		
@@ -266,8 +268,10 @@ public class Player extends Entity {
 			yChange -= speed * delta;
 		if(window.getInput().isKeyDown(GLFW.GLFW_KEY_D))
 			xChange += speed * delta;
-		getTransform().pos.x = xChange > 0 ? Math.min(world.getWidth() - 2, getTransform().pos.x + xChange) : Math.max(0, getTransform().pos.x + xChange);
-		getTransform().pos.y = yChange > 0 ? Math.min(0, getTransform().pos.y + yChange) : Math.max(-world.getHeight() + 2, getTransform().pos.y + yChange);
+		//getTransform().pos.x = xChange > 0 ? Math.min(world.getWidth() - 2, getTransform().pos.x + xChange) : Math.max(0, getTransform().pos.x + xChange);
+		//getTransform().pos.y = yChange > 0 ? Math.min(0, getTransform().pos.y + yChange) : Math.max(-world.getHeight() + 2, getTransform().pos.y + yChange);
+		velocity.x = xChange;
+		velocity.y = yChange;
 	}
 	
 	public void render(Shader shader, Camera camera){

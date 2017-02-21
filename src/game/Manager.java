@@ -3,7 +3,6 @@ package game;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_2;
 import static org.lwjgl.glfw.GLFW.glfwGetCursorPos;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowShouldClose;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
 
@@ -74,10 +73,6 @@ public class Manager {
 	}
 	
 	public void input(Window window, double frame_cap) {
-		if(window.getInput().isKeyReleased(GLFW_KEY_ESCAPE)){
-			glfwSetWindowShouldClose(window.getWindow(), true);
-			System.out.println("TRUE");
-		}
 		if (playing) {
 			if(window.getInput().isMouseButtonDown(GLFW_MOUSE_BUTTON_2)){ //2 should be changed to the right number
 				//glfwSetWindowShouldClose(win.getWindow(), true);
